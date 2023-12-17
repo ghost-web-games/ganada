@@ -1,4 +1,4 @@
-import { IDraw } from "../interface/IDraw"
+import IDraw from "../interface/IDraw";
 import Vector from "../libs/vector"
 import { IMouseEvent } from "../mouse"
 

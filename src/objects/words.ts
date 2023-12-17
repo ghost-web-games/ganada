@@ -1,5 +1,5 @@
 import { IMover } from "../contoller/usercontoller";
-import { IDraw } from "../interface/IDraw";
+import IDraw from "../interface/IDraw";
 import * as pxutil from "../libs/pixelutil"
 import Vector from "../libs/vector";
 import { ObjConfig } from "../models/objconfig";
@@ -90,15 +90,19 @@ export default class Words implements IDraw, IMover {
         if (this.mag != magnifiaction) {
             this.mag = magnifiaction
         }
+        const fontSize = this.viewpixel * 2
  
-        ctx.font = `${this.viewpixel}px verdana bold`
+        ctx.font = `bold ${fontSize}px 'Cute Font'`
+        ctx.textAlign = "left"
         ctx.textBaseline = "top"
         ctx.strokeStyle = "blue"
         ctx.fillStyle = "white"
         ctx.fillText(this.completeWord, 16, 16)
-        ctx.strokeText(this.completeWord, 16, 16)
+        //ctx.strokeText(this.completeWord, 16, 16)
         this.words.forEach((w, i) => {
-            ctx.strokeText(this.wordStr[i], this.viewpixel * i + 16, this.viewpixel + 16)
+            ctx.fillStyle = "white"
+            ctx.fillText(this.wordStr[i], this.viewpixel * i + 16, fontSize)
+            //ctx.strokeText(this.wordStr[i], this.viewpixel * i + 16, this.viewpixel + 16)
             w.draw(ctx, magnifiaction)
             //for debugging
             w.BBox.draw(ctx, magnifiaction)

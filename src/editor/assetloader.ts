@@ -1,4 +1,3 @@
-import { IDraw } from "../interface/IDraw"
 import Vector from "../libs/vector"
 
 export default class AssetLoader { 

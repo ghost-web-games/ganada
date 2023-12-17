@@ -4,7 +4,7 @@ import AssetLoader from "./assetloader"
 import Grid from "./grid"
 import { GUI } from "dat.gui"
 import TileMap from "./tilemap"
-import { IDraw } from "../interface/IDraw"
+import IDraw from "../interface/IDraw";
 
 
 export default class MapEditor {

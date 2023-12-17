@@ -1,6 +1,6 @@
 import Vector from "../libs/vector"
 import * as pxutil from "../libs/pixelutil"
-import { IDraw } from "../interface/IDraw"
+import IDraw from "../interface/IDraw";
 import { ImgObjConfig } from "../models/objconfig"
 import { IMover } from "../contoller/usercontoller"
 

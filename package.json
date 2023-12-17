@@ -18,7 +18,8 @@
   "license": "ISC",
   "dependencies": {
     "@types/dat.gui": "^0.7.12",
-    "dat.gui": "^0.7.9"
+    "dat.gui": "^0.7.9",
+    "gsap": "^3.12.4"
   },
   "devDependencies": {
     "@babel/core": "^7.23.5",

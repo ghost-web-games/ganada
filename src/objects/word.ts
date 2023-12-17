@@ -1,5 +1,5 @@
 import { IMover } from "../contoller/usercontoller";
-import { IDraw } from "../interface/IDraw";
+import IDraw from "../interface/IDraw";
 import * as pxutil from "../libs/pixelutil"
 import Vector from "../libs/vector";
 import { ObjConfig } from "../models/objconfig";
@@ -7,7 +7,6 @@ import { BoundingBox, IBox } from "./boundingbox";
 
 
 export default class Word implements IDraw, IMover, IBox {
-    centerPos: Vector
     pixel: number
     mag: number
     playerCoord: Vector
@@ -21,7 +20,6 @@ export default class Word implements IDraw, IMover, IBox {
     constructor(config: ObjConfig, color: string, word: string) {
         this.mag = config.mag
         this.pixel = config.pixel
-        this.centerPos = new Vector(0, 0)
         this.playerCoord = new Vector(0, 0)
         this.height = pxutil.pixelFitUp(config.height, this.viewpixel)
         this.width = pxutil.pixelFitUp(config.width, this.viewpixel)
@@ -51,8 +49,6 @@ export default class Word implements IDraw, IMover, IBox {
     public resize(width: number, height: number) {
         this.height = pxutil.pixelFitUp(height, this.viewpixel)
         this.width = pxutil.pixelFitUp(width, this.viewpixel)
-        this.centerPos = new Vector((this.width - this.viewpixel) / 2,
-            (this.height - this.viewpixel) / 2)
 
         const x = pxutil.pixelFitUp(Math.floor(this.width * Math.random()), this.viewpixel)
         const y = pxutil.pixelFitUp(Math.floor(this.height * Math.random()), this.viewpixel)
@@ -62,8 +58,8 @@ export default class Word implements IDraw, IMover, IBox {
     get viewpixel(): number {
         return this.pixel * this.mag
     }
-    get X(): number { return (this.wordsLoc.x + this.playerCoord.x) % this.width}
-    get Y(): number { return (this.wordsLoc.y + this.playerCoord.y) % this.height}
+    get X(): number { return (this.wordsLoc.x + this.playerCoord.x) % this.width }
+    get Y(): number { return (this.wordsLoc.y + this.playerCoord.y + this.viewpixel / 2) % this.height}
     get Width(): number { return this.viewpixel}
     get Height(): number { return this.viewpixel}
 
@@ -76,7 +72,7 @@ export default class Word implements IDraw, IMover, IBox {
             this.mag = magnifiaction
         }
  
-        ctx.font = `${this.viewpixel}px verdana bold`
+        ctx.font = `bold ${this.viewpixel * 2}px 'Cute Font'`
         ctx.textBaseline = "top"
         const movingX = (this.wordsLoc.x + this.playerCoord.x) % this.width
         const movingY = (this.wordsLoc.y + this.playerCoord.y) % this.height

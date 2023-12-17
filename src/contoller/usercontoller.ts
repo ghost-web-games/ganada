@@ -1,4 +1,4 @@
-import { IDraw } from "../interface/IDraw"
+import IDraw from "../interface/IDraw";
 import { getAngle } from "../libs/utils"
 import Vector from "../libs/vector"
 import { IMouseEvent } from "../mouse"
@@ -20,6 +20,19 @@ export interface IMover {
     MoveEnd(playerCoord: Vector, dir: Direction): void
 }
 
+enum MoveType {
+    None,
+    MoveStart,
+    Moving,
+    MoveEnd
+}
+
+type MoveOp = {
+    moveType: MoveType
+    playerCoord: Vector
+    dir: Direction
+}
+
 export class UserController implements IDraw, IMouseEvent {
     width: number
     height: number
@@ -30,6 +43,7 @@ export class UserController implements IDraw, IMouseEvent {
     mag: number
     controlObj: Array<IMover>
     dir: Direction
+    moveOp: MoveOp
     
     constructor(config: ObjConfig) {
         this.pixel = config.pixel
@@ -43,6 +57,7 @@ export class UserController implements IDraw, IMouseEvent {
             (config.height - this.viewpixel) / 2)
         this.controlObj = new Array<IMover>()
         this.dir = Direction.Down
+        this.moveOp = {moveType: MoveType.None, playerCoord: this.playerCoord, dir: this.dir}
     }
     get viewpixel() : number {
         return this.pixel * this.mag
@@ -55,12 +70,15 @@ export class UserController implements IDraw, IMouseEvent {
     OverEvent(x: number, y: number): void {
     }
     ClickUpEvent(x: number, y: number): void {
+        if (this.moveOp.moveType == MoveType.MoveEnd) return
         this.movingFlag = false
-        this.controlObj.forEach(obj => {
-            obj.MoveEnd(this.playerCoord, this.dir)
-        });
+        this.moveOp = {
+            moveType: MoveType.MoveEnd, playerCoord: this.playerCoord, dir: this.dir
+        }
     }
     ClickEvent(x: number, y: number): void {
+        if (this.moveOp.moveType == MoveType.MoveStart) return
+
         const angle = getAngle(this.centerPos, new Vector(x, y))
         if (angle < 45 && angle > -45) {
             // right
@@ -82,12 +100,26 @@ export class UserController implements IDraw, IMouseEvent {
             this.dir = Direction.Down
         }
         this.movingFlag = true
-        this.controlObj.forEach(obj => {
-            obj.MoveStart(this.playerCoord, this.dir)
-        });
+        this.moveOp = {
+            moveType: MoveType.MoveStart, playerCoord: this.playerCoord, dir: this.dir
+        }
     }
     public update() {
-
+        switch (this.moveOp.moveType) {
+            case MoveType.None: break;
+            case MoveType.MoveStart:
+                this.controlObj.forEach(obj => {
+                    obj.MoveStart(this.moveOp.playerCoord, this.moveOp.dir)
+                });
+                break;
+            case MoveType.Moving: break;
+            case MoveType.MoveEnd:
+                this.controlObj.forEach(obj => {
+                    obj.MoveEnd(this.moveOp.playerCoord, this.moveOp.dir)
+                });
+                break;
+        }
+        this.moveOp.moveType = MoveType.None
     }
 
     public resize(width: number, height: number) {

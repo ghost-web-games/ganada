@@ -1,4 +1,4 @@
-import { IDraw } from "../interface/IDraw";
+import IDraw from "../interface/IDraw";
 
 export interface IBox {
     get X(): number
