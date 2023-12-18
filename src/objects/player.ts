@@ -83,6 +83,7 @@ export default class Player implements IDraw, IMover, IBox {
     public update() {
         this.curStat.update()
     }
+    public checkOutrange(): boolean { return false }
 
     public draw(ctx: CanvasRenderingContext2D | null, magnifiaction: number) {
         if (ctx == null) return

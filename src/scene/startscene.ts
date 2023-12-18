@@ -44,6 +44,7 @@ export default class StartScene implements IScene {
     changeScene(next: SceneMode): void { }
     update(): void {
     }
+    public checkOutrange(): boolean { return false }
 
     draw(ctx: CanvasRenderingContext2D | null, magnification: number): void {
         if (ctx == null) return
@@ -53,9 +54,10 @@ export default class StartScene implements IScene {
         ctx.font = `bold 5rem 'Cute Font'`
         ctx.textAlign = "center"
         ctx.textBaseline = "middle"
-        ctx.strokeStyle = "blue"
-        ctx.fillStyle = "blue"
-        ctx.fillText("GANADA Game", this.centerPos.x, this.centerPos.y - this.centerPos.y / 3)
+        ctx.strokeStyle = "black"
+        ctx.fillStyle = "white"
+        ctx.fillText("GANADA", this.centerPos.x, this.centerPos.y - this.centerPos.y / 3)
+        ctx.strokeText("GANADA", this.centerPos.x, this.centerPos.y - this.centerPos.y / 3)
     }
 
     resize(width: number, height: number) {

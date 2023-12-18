@@ -16,6 +16,8 @@ export default class Words implements IDraw, IMover {
     height: number
     wordsBox: Array<IBox>
     completeWord: string
+    targetWordColors: string[]
+    targetWordOffset: number
 
     constructor(config: ObjConfig) {
         this.mag = config.mag
@@ -23,6 +25,9 @@ export default class Words implements IDraw, IMover {
         this.centerPos = new Vector(0, 0)
         this.height = pxutil.pixelFitUp(config.height, this.viewpixel)
         this.width = pxutil.pixelFitUp(config.width, this.viewpixel)
+
+        this.targetWordColors = ["pink", "yellow", "orange"]
+        this.targetWordOffset = 0
         
         this.completeWord = "강아지"
         this.words = new Array<Word>()
@@ -66,16 +71,18 @@ export default class Words implements IDraw, IMover {
         })
     }
 
-    public CollidingCheck(target: IBox) {
-        if (this.wordStr.length == 0) return
+    public CollidingCheck(target: IBox): boolean {
+        if (this.wordStr.length == 0) return false
 
         for (let i = 0; i < this.words.length; i++) {
             if (this.words[i].BBox.isColliding(target) &&
                 this.words[i].Str == this.wordStr[0]) {
                 this.words.splice(i, 1)
                 this.wordStr.splice(0, 1)
+                return true
             }
         }
+        return false
     }
 
     get viewpixel(): number {
@@ -84,6 +91,7 @@ export default class Words implements IDraw, IMover {
 
     public update() {
     }
+    public checkOutrange(): boolean { return false }
 
     public draw(ctx: CanvasRenderingContext2D | null, magnifiaction: number) {
         if (ctx == null) return
@@ -95,14 +103,17 @@ export default class Words implements IDraw, IMover {
         ctx.font = `bold ${fontSize}px 'Cute Font'`
         ctx.textAlign = "left"
         ctx.textBaseline = "top"
-        ctx.strokeStyle = "blue"
+        ctx.strokeStyle = "yellow"
         ctx.fillStyle = "white"
         ctx.fillText(this.completeWord, 16, 16)
-        //ctx.strokeText(this.completeWord, 16, 16)
+        ctx.strokeText(this.completeWord, 16, 16)
         this.words.forEach((w, i) => {
             ctx.fillStyle = "white"
             ctx.fillText(this.wordStr[i], this.viewpixel * i + 16, fontSize)
-            //ctx.strokeText(this.wordStr[i], this.viewpixel * i + 16, this.viewpixel + 16)
+            if (!i) {
+                ctx.strokeStyle = this.targetWordColors[this.targetWordOffset++ % this.targetWordColors.length]
+                ctx.strokeText(this.wordStr[i], this.viewpixel * i + 16, fontSize)
+            }
             w.draw(ctx, magnifiaction)
             //for debugging
             w.BBox.draw(ctx, magnifiaction)

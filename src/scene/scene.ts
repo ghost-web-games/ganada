@@ -31,6 +31,7 @@ export default class Scene implements IScene {
 
     update(): void {
     }
+    public checkOutrange(): boolean { return false }
 
     draw(ctx: CanvasRenderingContext2D | null, magnification: number): void {
         this.currentScene.update()

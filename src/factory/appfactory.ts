@@ -6,6 +6,8 @@ import { UserController } from "../contoller/usercontoller"
 import Words from "../objects/words"
 import IScene from "../interface/IScene"
 import Scene from "../scene/scene"
+import Coin from "../effect/coin"
+import App from "../app"
 
 
 export default class AppFactory {
@@ -15,40 +17,60 @@ export default class AppFactory {
     gui: GUI
     backgrounds: Background[]
     player: Player
+    coin: Coin
     userCtrl: UserController
     words: Words
     scene: IScene
+    gridPixel: number
+    width: number
+    height: number
 
     constructor(gridPixel: number) {
         this.canvas = document.querySelector('canvas') as HTMLCanvasElement
-        const width = this.canvas.width
-        const height = this.canvas.height
+        this.width = this.canvas.width / App.dpr
+        this.height = this.canvas.height / App.dpr
         this.ctx = this.canvas.getContext('2d')
+        this.gridPixel = gridPixel
 
         this.mouse = new Mouse(this.canvas)
         this.gui = new GUI()
         this.backgrounds = [
             new Background({
                 img: document.querySelector('#bg1-img') as HTMLImageElement,
-                pixel: gridPixel, mag: 1, width: width, height: height,
+                imagePixel: gridPixel, pixel: gridPixel, mag: 1, width: this.width, height: this.height,
                 tiles: [0, 1, 2, 3, 4, 5, 10, 11, 12, 13, 14, 42],
                 idleTiles: []
             })
         ]
         this.player = new Player({
             img: document.querySelector('#player') as HTMLImageElement, 
-            pixel: gridPixel, mag: 1, width: width, height: height,
+            imagePixel: gridPixel, pixel: gridPixel, mag: 1, width: this.width, height: this.height,
             tiles: [13, 16/*, 19, 22*/], idleTiles: []
         })
+        this.coin = new Coin({
+            img: document.querySelector('#coin') as HTMLImageElement, 
+            imagePixel: 60, pixel: gridPixel, mag: 1, width: this.width, height: this.height,
+            tiles: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], idleTiles: []
+        })
         this.userCtrl = new UserController({
-            pixel: gridPixel, mag: 1, width: width, height: height,
+            pixel: gridPixel, mag: 1, width: this.width, height: this.height,
         })
         this.words = new Words({
-            pixel: gridPixel, mag: 1, width: width, height: height
+            pixel: gridPixel, mag: 1, width: this.width, height: this.height
         })
         this.scene = new Scene(this)
         this.scene.gameInit()
     }
+    get NewCoin(): Coin {
+        return new Coin({
+            img: document.querySelector('#coin') as HTMLImageElement, 
+            imagePixel: 60, pixel: this.gridPixel, mag: 1, 
+            width: this.width, height: this.height,
+            tiles: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], idleTiles: []
+        })
+
+    }
+    get Coin(): Coin { return this.coin }
     get Scene(): IScene { return this.scene }
     get Word(): Words {return this.words}
     get UserCtrl(): UserController { return this.userCtrl }
@@ -58,4 +80,6 @@ export default class AppFactory {
     get Gui(): GUI { return this.gui }
     get Backgrounds(): Background[] { return this.backgrounds }
     get Player(): Player { return this.player }
+    set Width(width: number) { this.width = width }
+    set Height(height: number) { this.height = height }
 }

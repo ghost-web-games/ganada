@@ -65,6 +65,7 @@ export default class Word implements IDraw, IMover, IBox {
 
     public update() {
     }
+    public checkOutrange(): boolean { return false }
 
     public draw(ctx: CanvasRenderingContext2D | null, magnifiaction: number) {
         if (ctx == null) return

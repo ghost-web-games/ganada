@@ -6,7 +6,7 @@ import IDraw from "./interface/IDraw"
 
 export default class App {
     static dpr = devicePixelRatio > 1 ? 2 : 1
-    static interval = 1000 / 10
+    static interval = 1000 / 30
     static width = innerWidth
     static height = innerHeight
     canvas: HTMLCanvasElement
@@ -15,18 +15,19 @@ export default class App {
     currentScene: IDraw
     gui: GUI
     magnification: number
+    factory: AppFactory
 
     constructor() {
-        const factory = new AppFactory(16)
-        this.canvas = factory.Canvas
-        this.ctx = factory.Context
-        this.mouse = factory.Mouse
-        this.gui = factory.Gui
+        this.factory = new AppFactory(16)
+        this.canvas = this.factory.Canvas
+        this.ctx = this.factory.Context
+        this.mouse = this.factory.Mouse
+        this.gui = this.factory.Gui
 
         this.magnification = 2
 
-        factory.Scene.gameInit()
-        this.currentScene = factory.Scene
+       this. factory.Scene.gameInit()
+        this.currentScene = this.factory.Scene
 
         this.resize()
         window.addEventListener('resize', this.resize.bind(this))
@@ -57,8 +58,8 @@ export default class App {
         requestAnimationFrame(frame)
     }
     resize() {
-        App.width = innerWidth
-        App.height = innerHeight
+        this.factory.Width = App.width = innerWidth
+        this.factory.Height = App.height = innerHeight
         this.canvas.style.width = App.width + "px"
         this.canvas.style.height = App.height + "px"
         this.canvas.width = App.width * App.dpr

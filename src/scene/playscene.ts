@@ -53,9 +53,14 @@ export default class PlayScene implements IScene {
 
     update(): void {
     }
+    public checkOutrange(): boolean { return false }
 
     draw(ctx: CanvasRenderingContext2D | null, magnification: number): void {
-        this.words.CollidingCheck(this.player)
+        if (this.words.CollidingCheck(this.player)) {
+            const userCont = this.factory.UserCtrl
+            const coin = this.factory.NewCoin
+            this.drawObject.push(coin)
+        }
 
         this.drawObject.forEach((o) => {
             o.update()
@@ -63,6 +68,12 @@ export default class PlayScene implements IScene {
         this.drawObject.forEach((o) => {
             o.draw(ctx, magnification)
         })
+
+        for (let i = 0; i < this.drawObject.length; i++) {
+            if (this.drawObject[i].checkOutrange()) {
+                this.drawObject.splice(i, 1)
+            }
+        }
     }
 
     resize(width: number, height: number) {

@@ -97,6 +97,7 @@ export default class TileMap implements IMouseEvent, IDraw {
         this.updatePos()
     }
     public update() { }
+    public checkOutrange(): boolean { return false }
 
     public draw(ctx: CanvasRenderingContext2D | null, magnifiaction: number) {
         if (ctx == null) return

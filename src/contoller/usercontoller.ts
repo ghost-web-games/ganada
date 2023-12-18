@@ -121,6 +121,7 @@ export class UserController implements IDraw, IMouseEvent {
         }
         this.moveOp.moveType = MoveType.None
     }
+    public checkOutrange(): boolean { return false }
 
     public resize(width: number, height: number) {
         this.width = width

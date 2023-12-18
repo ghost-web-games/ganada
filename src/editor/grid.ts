@@ -34,6 +34,7 @@ export default class Grid implements IMouseEvent, IDraw {
     }
 
     public update() { }
+    public checkOutrange(): boolean { return false }
 
     public draw(ctx: CanvasRenderingContext2D | null, magnification: number) {
         if (ctx == null) return

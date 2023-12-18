@@ -12,6 +12,7 @@ export default class EndScene implements IScene{
 
     update(): void {
     }
+    public checkOutrange(): boolean { return false }
 
     draw(ctx: CanvasRenderingContext2D | null, magnification: number): void {
     }

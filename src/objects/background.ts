@@ -84,6 +84,7 @@ export class Background implements IDraw, IMover{
             (height - this.viewpixel) / 2)
         this.fillBackground()
     }
+    public checkOutrange(): boolean { return false }
 
     public draw(ctx: CanvasRenderingContext2D | null, magnifiaction: number) {
         if (ctx == null) return

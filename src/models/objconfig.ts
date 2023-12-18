@@ -1,5 +1,6 @@
 export type ImgObjConfig = {
     img: HTMLImageElement
+    imagePixel: number
     pixel: number
     mag: number
     width: number

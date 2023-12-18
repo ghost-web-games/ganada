@@ -24,6 +24,7 @@ export class BoundingBox implements IDraw {
     }
 
     public update() { }
+    public checkOutrange(): boolean { return false }
 
     public resize(width: number, height: number) { }
     
