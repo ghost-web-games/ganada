@@ -60,7 +60,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app */ \"./src/app.ts\");\n\nconst app = new _app__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\n/*\nimport MapEditor from \"./editor/mapeditor\";\n\nconst app = new MapEditor();\n*/\nwindow.addEventListener('load', () => {\n  app.init();\n  app.render();\n});\n\n//# sourceURL=webpack://ghost-web-games.github.io/./src/index.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./app */ \"./src/app.ts\");\n\nconst app = new _app__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\n/*\nimport MapEditor from \"./editor/mapeditor\";\n\nconst app = new MapEditor();\n*/\nwindow.addEventListener('DOMContentLoaded', () => {\n  app.init();\n  app.render();\n});\n\n//# sourceURL=webpack://ghost-web-games.github.io/./src/index.ts?");
 
 /***/ }),
 

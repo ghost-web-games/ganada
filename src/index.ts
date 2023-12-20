@@ -7,7 +7,7 @@ import MapEditor from "./editor/mapeditor";
 const app = new MapEditor();
 */
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
     app.init();
     app.render();
 });
