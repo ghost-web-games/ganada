@@ -2,6 +2,7 @@ import IDraw from "./IDraw";
 
 export enum SceneMode {
     Start,
+    Ready,
     Play,
     End,
 }

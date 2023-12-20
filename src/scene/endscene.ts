@@ -2,7 +2,7 @@ import AppFactory from "../factory/appfactory";
 import IScene, { SceneMode } from "../interface/IScene";
 
 export default class EndScene implements IScene{
-    constructor(factory: AppFactory, scene:IScene) {
+    constructor(private factory: AppFactory, private scene:IScene) {
 
     }
     gameInit() {}

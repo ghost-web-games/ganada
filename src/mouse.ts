@@ -47,6 +47,9 @@ export class Mouse {
     public RegisterHandler(client: IMouseEvent) {
         this.eventHandler.push(client)
     }
+    public ClearHandler() {
+        this.eventHandler.length = 0
+    }
 
     get Pos(): Vector { return this.pos }
 }

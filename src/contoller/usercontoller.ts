@@ -66,6 +66,9 @@ export class UserController implements IDraw, IMouseEvent {
         this.controlObj.push(obj)
         obj.InitCoord(this.playerCoord, this.dir)
     }
+    public ClearMover() {
+        this.controlObj.length = 0
+    }
 
     OverEvent(x: number, y: number): void {
     }

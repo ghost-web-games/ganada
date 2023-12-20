@@ -24,7 +24,7 @@ main {
     overflow: hidden;
 }
 
-.ready-screen, .finish-screen {
+.ready-screen, .ready2-screen, .finish-screen {
   position: absolute;
   left: 0;
   top: 0;
@@ -32,7 +32,7 @@ main {
   height: 100%;
   z-index: 10;
 
-/*    background-color: rgba(0, 0, 0, 0.6); */
+  background-color: rgba(0, 0, 0, 0.6);
 
   display: flex;
   flex-direction: column;
@@ -42,11 +42,12 @@ main {
   user-select: none;
 }
 
-.title-img {
-  width: 60vmin;
-  margin-bottom: 15vmin;
+.title-text, .word-text {
+  font-family: 'Cute Font';
+  font-weight: bold;
+  font-size:10vmin;
+  color:#fff;
 
-  opacity: 0;
   transform: scale(2);
 }
 
@@ -57,7 +58,7 @@ main {
   transform: scale(0);
 }
 
-.finish-screen {
+.finish-screen, .ready2-screen {
   color: #fff;
   font-family: 'Jua';
   opacity: 0;

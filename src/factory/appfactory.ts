@@ -8,6 +8,7 @@ import IScene from "../interface/IScene"
 import Scene from "../scene/scene"
 import Coin from "../effect/coin"
 import App from "../app"
+import GameStore from "../models/gamestore"
 
 
 export default class AppFactory {
@@ -21,6 +22,7 @@ export default class AppFactory {
     userCtrl: UserController
     words: Words
     scene: IScene
+    gamdStore: GameStore
     gridPixel: number
     width: number
     height: number
@@ -58,6 +60,8 @@ export default class AppFactory {
         this.words = new Words({
             pixel: gridPixel, mag: 1, width: this.width, height: this.height
         })
+        this.gamdStore = new GameStore()
+
         this.scene = new Scene(this)
         this.scene.gameInit()
     }
@@ -70,6 +74,7 @@ export default class AppFactory {
         })
 
     }
+    get GameStore(): GameStore { return this.gamdStore }
     get Coin(): Coin { return this.coin }
     get Scene(): IScene { return this.scene }
     get Word(): Words {return this.words}

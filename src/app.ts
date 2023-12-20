@@ -35,7 +35,7 @@ export default class App {
 
     public init() {
         this.resize()
-        this.gui.add(this, "magnification")
+        //this.gui.add(this, "magnification")
     }
 
     public render() {

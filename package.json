@@ -19,7 +19,8 @@
   "dependencies": {
     "@types/dat.gui": "^0.7.12",
     "dat.gui": "^0.7.9",
-    "gsap": "^3.12.4"
+    "gsap": "^3.12.4",
+    "hangul-js": "^0.2.6"
   },
   "devDependencies": {
     "@babel/core": "^7.23.5",

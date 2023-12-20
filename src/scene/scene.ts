@@ -2,6 +2,7 @@ import AppFactory from "../factory/appfactory";
 import IScene, { SceneMode } from "../interface/IScene";
 import EndScene from "./endscene";
 import PlayScene from "./playscene";
+import ReadyScene from "./readyscene";
 import StartScene from "./startscene";
 
 
@@ -16,7 +17,8 @@ export default class Scene implements IScene {
     }
 
     gameInit() {
-        this.scenes[SceneMode.Start] = new StartScene(this.factory)
+        this.scenes[SceneMode.Start] = new StartScene(this.factory, this)
+        this.scenes[SceneMode.Ready] = new ReadyScene(this.factory, this)
         this.scenes[SceneMode.Play] = new PlayScene(this.factory, this)
         this.scenes[SceneMode.End] = new EndScene(this.factory, this)
         this.currentScene = this.scenes[SceneMode.Start]
@@ -30,11 +32,11 @@ export default class Scene implements IScene {
     }
 
     update(): void {
+        this.currentScene.update()
     }
     public checkOutrange(): boolean { return false }
 
     draw(ctx: CanvasRenderingContext2D | null, magnification: number): void {
-        this.currentScene.update()
         this.currentScene.draw(ctx, magnification)
     }
 

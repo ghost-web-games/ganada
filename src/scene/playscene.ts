@@ -1,26 +1,26 @@
 import AppFactory from "../factory/appfactory";
 import IDraw from "../interface/IDraw";
 import IScene, { SceneMode } from "../interface/IScene";
+import GameStore from "../models/gamestore";
 import Player from "../objects/player";
 import Words from "../objects/words";
 
 export default class PlayScene implements IScene {
-    factory: AppFactory
     drawObject: Array<IDraw>
     player: Player
     words: Words
-    scene: IScene
+    gameStore: GameStore
     width: number
     height: number
+    targetWordCount: number
 
-    constructor(factory: AppFactory, scene: IScene) {
-        this.factory = factory
-        this.scene = scene
+    constructor(private factory: AppFactory, private scene: IScene) {
         this.drawObject = new Array<IDraw>()
         this.player = factory.player
         this.words = factory.words
         this.width = this.height = 0
-        this.gameInit()
+        this.gameStore = factory.GameStore
+        this.targetWordCount = 0
     }
 
     changeScene(next: SceneMode): void { }
@@ -40,31 +40,37 @@ export default class PlayScene implements IScene {
         this.drawObject.push(player)
         userCont.RegisterMover(player)
 
-        const words = this.factory.Word
-        this.drawObject.push(words)
-        userCont.RegisterMover(words)
+        const wordEntry = this.gameStore.GetWord()
+        this.words.NewWords(wordEntry.Word, wordEntry.Wordlist)
+        this.drawObject.push(this.words)
+        this.targetWordCount = wordEntry.Wordlist.length
+
+        userCont.RegisterMover(this.words)
         this.drawObject.forEach((o) => {
             o.resize(this.width, this.height)
         })
     }
     gameRelease() {
         this.drawObject.length = 0
+        const mouse = this.factory.Mouse
+        mouse.ClearHandler()
+        const userCont = this.factory.UserCtrl
+        userCont.ClearMover()
     }
 
     update(): void {
-    }
-    public checkOutrange(): boolean { return false }
-
-    draw(ctx: CanvasRenderingContext2D | null, magnification: number): void {
         if (this.words.CollidingCheck(this.player)) {
             const userCont = this.factory.UserCtrl
             const coin = this.factory.NewCoin
             this.drawObject.push(coin)
         }
-
         this.drawObject.forEach((o) => {
             o.update()
         })
+    }
+    public checkOutrange(): boolean { return false }
+
+    draw(ctx: CanvasRenderingContext2D | null, magnification: number): void {
         this.drawObject.forEach((o) => {
             o.draw(ctx, magnification)
         })
@@ -72,6 +78,9 @@ export default class PlayScene implements IScene {
         for (let i = 0; i < this.drawObject.length; i++) {
             if (this.drawObject[i].checkOutrange()) {
                 this.drawObject.splice(i, 1)
+                if(--this.targetWordCount == 0) {
+                    this.scene.changeScene(SceneMode.Ready)
+                }
             }
         }
     }

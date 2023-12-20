@@ -18,8 +18,10 @@ export default class Words implements IDraw, IMover {
     completeWord: string
     targetWordColors: string[]
     targetWordOffset: number
+    config: ObjConfig
 
     constructor(config: ObjConfig) {
+        this.config = config
         this.mag = config.mag
         this.pixel = config.pixel
         this.centerPos = new Vector(0, 0)
@@ -29,13 +31,20 @@ export default class Words implements IDraw, IMover {
         this.targetWordColors = ["pink", "yellow", "orange"]
         this.targetWordOffset = 0
         
-        this.completeWord = "강아지"
         this.words = new Array<Word>()
         this.wordsBox = new Array<IBox>()
+        this.wordStr = []
+        this.completeWord = ""
+        
+    }
+    NewWords(completeWord: string, wordStr: string[]) {
         const colors = ["red", "orange", "yellow", "green", "blue", "purple", "indigo"]
-        this.wordStr = ["ㄱ", "ㅏ", "ㅇ", "ㅇ", "ㅏ", "ㅈ", "ㅣ"]
+        this.words.length = 0
+        this.wordsBox.length = 0
+        this.completeWord = completeWord
+        this.wordStr = wordStr
         this.wordStr.forEach((w, i) => {
-            const word = new Word(config, colors[i], w)
+            const word = new Word(this.config, colors[i], w)
             this.words.push(word)
             this.wordsBox.push(word)
         })
