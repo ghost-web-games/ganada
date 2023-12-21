@@ -13,6 +13,7 @@ export default class PlayScene implements IScene {
     width: number
     height: number
     targetWordCount: number
+    speak: SpeechSynthesisUtterance
 
     constructor(private factory: AppFactory, private scene: IScene) {
         this.drawObject = new Array<IDraw>()
@@ -21,9 +22,22 @@ export default class PlayScene implements IScene {
         this.width = this.height = 0
         this.gameStore = factory.GameStore
         this.targetWordCount = 0
+        this.speak = new SpeechSynthesisUtterance()
     }
 
     changeScene(next: SceneMode): void { }
+    soundUpdate() {
+        window.speechSynthesis.cancel()
+        const wordlist = this.gameStore.GetWord().Wordlist
+        if (wordlist.length == 0) return
+
+        this.speak.text = wordlist[0]
+        this.speak.lang = 'ko'
+        this.speak.onend = () => {
+            window.speechSynthesis.speak(this.speak)
+        }
+        window.speechSynthesis.speak(this.speak)
+    }
 
     gameInit() {
         const userCont = this.factory.UserCtrl
@@ -49,6 +63,7 @@ export default class PlayScene implements IScene {
         this.drawObject.forEach((o) => {
             o.resize(this.width, this.height)
         })
+        this.soundUpdate()
     }
     gameRelease() {
         this.drawObject.length = 0
@@ -63,6 +78,7 @@ export default class PlayScene implements IScene {
             const userCont = this.factory.UserCtrl
             const coin = this.factory.NewCoin
             this.drawObject.push(coin)
+            this.soundUpdate()
         }
         this.drawObject.forEach((o) => {
             o.update()

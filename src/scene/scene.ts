@@ -10,10 +10,12 @@ export default class Scene implements IScene {
     currentScene: IScene
     factory: AppFactory
     scenes: Array<IScene>
+    currentMode: SceneMode
     constructor(factory: AppFactory) {
         this.factory = factory
         this.scenes = new Array<IScene>()
         this.currentScene = this.scenes[SceneMode.Start]
+        this.currentMode = SceneMode.Start
     }
 
     gameInit() {
@@ -26,8 +28,10 @@ export default class Scene implements IScene {
     gameRelease() {}
 
     changeScene(next: SceneMode): void {
+        if (this.currentMode == next)  return
+        this.currentMode = next
         this.currentScene.gameRelease()
-        this.currentScene = this.scenes[next]
+        this.currentScene = this.scenes[this.currentMode]
         this.currentScene.gameInit()
     }
 

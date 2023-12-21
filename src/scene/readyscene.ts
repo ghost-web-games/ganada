@@ -1,11 +1,12 @@
 import AppFactory from "../factory/appfactory";
+import { gsap, Elastic } from "gsap";
 import IDraw from "../interface/IDraw";
 import IScene, { SceneMode } from "../interface/IScene";
 import Vector from "../libs/vector";
 import GameStore, { WordEntry } from "../models/gamestore";
 import { IMouseEvent, Mouse } from "../mouse";
 
-export default class ReadyScene implements IScene, IMouseEvent {
+export default class ReadyScene implements IScene {
     readyScreen: HTMLElement
     wordText: HTMLElement
     centerPos: Vector
@@ -16,7 +17,10 @@ export default class ReadyScene implements IScene, IMouseEvent {
     constructor(private factory: AppFactory, private scene: IScene) {
         this.readyScreen = document.querySelector('.ready2-screen') as HTMLElement
         this.wordText = this.readyScreen.querySelector('.word-text') as HTMLElement
+
+        this.readyScreen.addEventListener('click', this.nextScene.bind(this))
         this.wordText.addEventListener('click', this.nextScene.bind(this))
+
         this.centerPos = new Vector(0, 0)
         this.gameStore = factory.GameStore
         this.nextWord = this.gameStore.GetWord()
@@ -26,10 +30,6 @@ export default class ReadyScene implements IScene, IMouseEvent {
             this.drawObject.push(bg)
         })
     }
-    OverEvent(x: number, y: number) { }
-    ClickEvent(x: number, y: number) { }
-    ClickUpEvent(x: number, y: number) { this.scene.changeScene(SceneMode.Play) }
- 
     nextScene() {
         gsap.to(this.readyScreen, {
             opacity: 0, pointerEvents: 'none', duration: 0.3, onComplete: () => {
@@ -42,9 +42,9 @@ export default class ReadyScene implements IScene, IMouseEvent {
     gameInit() { 
         this.nextWord = this.gameStore.NextWord()
         this.wordText.innerHTML = this.gameStore.GetWord().Word
-
-        const mouse = this.factory.Mouse
-        mouse.RegisterHandler(this)
+        const speak = new SpeechSynthesisUtterance(this.nextWord.Word)
+        speak.lang = 'ko'
+        window.speechSynthesis.speak(speak)
 
         gsap.fromTo(this.readyScreen, { opacity: 0}, {
             opacity: 1, duration:0.5, pointerEvents: 'all'
@@ -54,11 +54,7 @@ export default class ReadyScene implements IScene, IMouseEvent {
         })
     }
 
-    gameRelease() {
-
-        const mouse = this.factory.Mouse
-        mouse.ClearHandler()
-    }
+    gameRelease() { }
 
     changeScene(next: SceneMode): void { }
 
@@ -72,11 +68,13 @@ export default class ReadyScene implements IScene, IMouseEvent {
             o.draw(ctx, magnification)
         })
 
+        /*
         ctx.font = `bold 5rem 'Cute Font'`
         ctx.textAlign = "center"
         ctx.textBaseline = "middle"
         ctx.fillStyle = "white"
         ctx.fillText(this.nextWord.Word, this.centerPos.x, this.centerPos.y - this.centerPos.y / 3)
+        */
     }
 
     resize(width: number, height: number) {

@@ -1,4 +1,4 @@
-@import "reset.css"
+@import "reset.css";
 
 html, body {
     width: 100%;
@@ -54,7 +54,7 @@ main {
 .title-text, .word-text {
   font-family: 'Cute Font';
   font-weight: bold;
-  font-size:10vmin;
+  font-size:15vmin;
   color:#fff;
 
   transform: scale(2);
