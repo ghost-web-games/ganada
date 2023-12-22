@@ -131,6 +131,7 @@ export class UserController implements IDraw, IMouseEvent {
         this.height = height
         this.centerPos = new Vector((width - this.viewpixel) / 2,
             (height - this.viewpixel) / 2)
+        this.playerCoord.setXY(this.viewpixel * 1024, this.viewpixel * 1024)
     }
 
     public draw(ctx: CanvasRenderingContext2D | null, magnifiaction: number) {
