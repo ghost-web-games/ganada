@@ -65,6 +65,8 @@ export default class App {
         this.canvas.width = App.width * App.dpr
         this.canvas.height = App.height * App.dpr
         this.ctx?.scale(App.dpr, App.dpr)
+        if (this.canvas.width / App.dpr > 800) this.magnification = 3
+        else this.magnification = 2
         this.currentScene.resize(this.canvas.width / App.dpr, this.canvas.height / App.dpr)
     }
 }

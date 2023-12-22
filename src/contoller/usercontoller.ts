@@ -135,5 +135,6 @@ export class UserController implements IDraw, IMouseEvent {
 
     public draw(ctx: CanvasRenderingContext2D | null, magnifiaction: number) {
         if (ctx == null) return
+        this.mag = magnifiaction
     }
 }
