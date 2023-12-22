@@ -5,6 +5,7 @@ html, body {
     height: 100%;
     overflow: hidden;
     margin: 0;
+    padding: 0;
     background-color: #fff;
     display: flex;
     align-items: center;
@@ -55,6 +56,16 @@ main {
   font-family: 'Cute Font';
   font-weight: bold;
   font-size:15vmin;
+  color:#fff;
+
+  transform: scale(2);
+}
+.help-text {
+  position: absolute;
+  bottom: 0;
+  font-family: 'Cute Font';
+  text-align: center;
+  font-size:5vmin;
   color:#fff;
 
   transform: scale(2);
