@@ -32,7 +32,13 @@ export default class PlayScene implements IScene {
         if (wordlist.length == 0) return
 
         this.speak.text = wordlist[0]
+        this.speak.rate = 0.7
         this.speak.lang = 'ko'
+        if (this.gameStore.SoundCheck()) {
+            this.speak.volume = 1
+        } else {
+            this.speak.volume = 0
+        }
         this.speak.onend = () => {
             window.speechSynthesis.speak(this.speak)
         }

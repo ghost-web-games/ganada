@@ -13,7 +13,7 @@ export default class App {
     ctx: CanvasRenderingContext2D | null
     mouse: Mouse
     currentScene: IDraw
-    gui: GUI
+    //gui: GUI
     magnification: number
     factory: AppFactory
 
@@ -22,7 +22,7 @@ export default class App {
         this.canvas = this.factory.Canvas
         this.ctx = this.factory.Context
         this.mouse = this.factory.Mouse
-        this.gui = this.factory.Gui
+        //this.gui = this.factory.Gui
 
         this.magnification = 2
 

@@ -102,6 +102,7 @@ export class Background implements IDraw, IMover{
             const y = Math.floor(i / x_tile) * this.viewpixel
             const movingX = (x + this.playerCoord.x) % widthMax
             const movingY = (y + this.playerCoord.y) % heightMax
+            //if ( movingX == 16) console.log(movingX, x , this.playerCoord.x, widthMax)
             const tile = this.map[i]
             ctx.drawImage(
                 this.img,

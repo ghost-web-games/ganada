@@ -38,7 +38,7 @@ export default class Coin implements IDraw, IMover {
             (config.height - this.viewpixel) / 2)
 
         this.angle = Math.PI / 180 * 45
-        this.friction = 0.93
+        this.friction = 1
         this.gravity = 0.93
         this.vx = -5
         this.vy = -10

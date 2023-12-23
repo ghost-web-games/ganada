@@ -15,7 +15,7 @@ export default class AppFactory {
     canvas: HTMLCanvasElement
     ctx: CanvasRenderingContext2D | null
     mouse: Mouse
-    gui: GUI
+    //gui: GUI
     backgrounds: Background[]
     player: Player
     coin: Coin
@@ -35,7 +35,7 @@ export default class AppFactory {
         this.gridPixel = gridPixel
 
         this.mouse = new Mouse(this.canvas)
-        this.gui = new GUI()
+        //this.gui = new GUI()
         this.backgrounds = [
             new Background({
                 img: document.querySelector('#bg1-img') as HTMLImageElement,
@@ -82,7 +82,7 @@ export default class AppFactory {
     get Canvas(): HTMLCanvasElement { return this.canvas }
     get Context(): CanvasRenderingContext2D | null { return this.ctx}
     get Mouse(): Mouse { return this.mouse }
-    get Gui(): GUI { return this.gui }
+    //get Gui(): GUI { return this.gui }
     get Backgrounds(): Background[] { return this.backgrounds }
     get Player(): Player { return this.player }
     set Width(width: number) { this.width = width }

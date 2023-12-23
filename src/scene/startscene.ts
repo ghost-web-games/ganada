@@ -18,6 +18,8 @@ export default class StartScene implements IScene {
         this.help = this.readyScreen.querySelector('.help-text') as HTMLElement
         this.playBtn = this.readyScreen.querySelector('.play-img') as HTMLElement
         this.playBtn.addEventListener('click', this.nextScene.bind(this))
+
+
         this.centerPos = new Vector(0, 0)
         this.drawObject = new Array<IDraw>()
         const bgs = factory.Backgrounds
@@ -53,6 +55,7 @@ export default class StartScene implements IScene {
         gsap.to(this.help, {
             opacity: 0, pointerEvents: 'none', duration: 0.3, onComplete: () => {}
         })
+        
     }
 
     changeScene(next: SceneMode): void { }

@@ -8,14 +8,46 @@ import StartScene from "./startscene";
 
 export default class Scene implements IScene {
     currentScene: IScene
-    factory: AppFactory
     scenes: Array<IScene>
     currentMode: SceneMode
-    constructor(factory: AppFactory) {
-        this.factory = factory
+    fullscreen: HTMLElement
+    fullscreenFlag: boolean
+    sound: HTMLElement
+
+    constructor(private factory: AppFactory) {
         this.scenes = new Array<IScene>()
         this.currentScene = this.scenes[SceneMode.Start]
         this.currentMode = SceneMode.Start
+        this.fullscreenFlag = false
+
+        this.sound = document.querySelector('#sound') as HTMLElement
+        this.sound.addEventListener('click', () => {
+            if(this.factory.GameStore.SoundCheck()) {
+                this.factory.GameStore.SoundOff()
+                this.sound.innerHTML = "volume_off"
+            } else {
+                this.factory.GameStore.SoundOn()
+                this.sound.innerHTML = "volume_up"
+            }
+        })
+
+        this.fullscreen = document.querySelector('#fullscreen') as HTMLElement
+        this.fullscreen.addEventListener('click', () => {
+            if (!this.fullscreenFlag) {
+                const elem = document.documentElement;
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen()
+                }
+                this.fullscreenFlag = true
+                this.fullscreen.innerHTML = "close_fullscreen"
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen()
+                }
+                this.fullscreenFlag = false
+                this.fullscreen.innerHTML = "fullscreen"
+            }
+       })
     }
 
     gameInit() {

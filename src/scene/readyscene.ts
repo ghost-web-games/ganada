@@ -42,15 +42,17 @@ export default class ReadyScene implements IScene {
     gameInit() { 
         this.nextWord = this.gameStore.NextWord()
         this.wordText.innerHTML = this.gameStore.GetWord().Word
-        const speak = new SpeechSynthesisUtterance(this.nextWord.Word)
-        speak.lang = 'ko'
-        window.speechSynthesis.speak(speak)
-
+        if (this.gameStore.SoundCheck()) {
+            const speak = new SpeechSynthesisUtterance(this.nextWord.Word)
+            speak.lang = 'ko'
+            speak.rate = 0.7
+            window.speechSynthesis.speak(speak)
+        }
         gsap.fromTo(this.readyScreen, { opacity: 0}, {
             opacity: 1, duration:0.5, pointerEvents: 'all'
         })
-        gsap.fromTo(this.wordText, { opacity: 0, scale: 0 }, {
-            opacity: 1, scale:1, duration:0.5, delay: 1
+        gsap.to(this.wordText, {
+            opacity: 1, scale: 1, duration: 1, ease: Elastic.easeOut.config(2, 0.5), delay: 0.5
         })
     }
 

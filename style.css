@@ -70,13 +70,28 @@ main {
 
   transform: scale(2);
 }
-
+.font-icon {
+  font-size:5vmin;
+}
+.menu-gui {
+  position: absolute;
+  text-align: right;
+  top: 0;
+  right: 0;
+  width: 11vmin;
+  cursor: pointer;
+  color:#fff;
+  z-index: 11;
+  
+  transform: scale(1);
+}
 .play-img, .replay-img {
   width: 11vmin;
   cursor: pointer;
   
   transform: scale(0);
 }
+
 
 .finish-screen, .ready2-screen {
   color: #fff;
