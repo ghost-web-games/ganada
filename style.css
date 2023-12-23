@@ -71,14 +71,14 @@ main {
   transform: scale(2);
 }
 .font-icon {
-  font-size:5vmin;
+  font-size:9vmin;
 }
 .menu-gui {
   position: absolute;
   text-align: right;
   top: 0;
   right: 0;
-  width: 11vmin;
+  margin: 10px;
   cursor: pointer;
   color:#fff;
   z-index: 11;

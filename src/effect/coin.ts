@@ -42,6 +42,10 @@ export default class Coin implements IDraw, IMover {
         this.gravity = 0.93
         this.vx = -5
         this.vy = -10
+
+        const sound = new Audio("assets/sound/coin.mp3")
+        sound.volume = 0.5
+        sound.play()
     }
     public selectTile(offsets: number[]): Array<Vector> {
         const ret = new Array<Vector>()
